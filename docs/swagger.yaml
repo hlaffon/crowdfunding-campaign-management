@@ -1,0 +1,325 @@
+basePath: /
+definitions:
+  model.AmountPerDay:
+    properties:
+      date:
+        type: string
+      total:
+        type: number
+    type: object
+  model.HTTPError:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: an error occurred
+        type: string
+    type: object
+  model.MilestoneContribution:
+    properties:
+      amount:
+        type: number
+      contributionId:
+        type: integer
+      contributionNb:
+        type: integer
+      date:
+        type: string
+      goal:
+        type: integer
+      milestone:
+        type: integer
+      totalRaised:
+        type: number
+      userId:
+        type: integer
+    type: object
+  model.NumberPerDay:
+    properties:
+      date:
+        type: string
+      total:
+        type: integer
+    type: object
+host: localhost:3000
+info:
+  contact: {}
+  description: A REST API in Go using Gin framework.
+  title: crowdfunding-campaign-management Test API
+  version: "1.0"
+paths:
+  /projects/{id}/amountPerDay:
+    get:
+      consumes:
+        - "*/*"
+      description: Get the amount raised per day
+      parameters:
+        - description: id
+          in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/model.AmountPerDay"
+        "400":
+          description: Bad Request
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+        "404":
+          description: Not Found
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+      summary: Return the amount per day
+      tags:
+        - project
+  /projects/{id}/averageContribution:
+    get:
+      consumes:
+        - "*/*"
+      description: Get the average contribution in euros for a given project
+      parameters:
+        - description: id
+          in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: float64
+        "400":
+          description: Bad Request
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+        "404":
+          description: Not Found
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+      summary: Return the average contribution
+      tags:
+        - project
+  /projects/{id}/contributionMilestones/{milestone}:
+    get:
+      consumes:
+        - "*/*"
+      description:
+        Get the contribution which reached a milestone (aka percentage
+        of goal)
+      parameters:
+        - description: id
+          in: path
+          name: id
+          required: true
+          type: integer
+        - description: milestone
+          in: path
+          name: milestone
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/model.MilestoneContribution"
+        "400":
+          description: Bad Request
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+        "404":
+          description: Not Found
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+      summary: Return the contribution which reached a milestone
+      tags:
+        - project
+  /projects/{id}/contributionsPerDay:
+    get:
+      consumes:
+        - "*/*"
+      description: Get the contributions number per day
+      parameters:
+        - description: id
+          in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/model.NumberPerDay"
+        "400":
+          description: Bad Request
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+        "404":
+          description: Not Found
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+      summary: Return the contributions number per day
+      tags:
+        - project
+  /projects/{id}/contributorsPerDay:
+    get:
+      consumes:
+        - "*/*"
+      description: Get the distinct contributors per day
+      parameters:
+        - description: id
+          in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/model.NumberPerDay"
+        "400":
+          description: Bad Request
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+        "404":
+          description: Not Found
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+      summary: Return the contributors number per day
+      tags:
+        - project
+  /projects/{id}/conversionRatePerDay:
+    get:
+      consumes:
+        - "*/*"
+      description:
+        Get the conversion rate per day (number of contributions divided
+        by number of views)
+      parameters:
+        - description: id
+          in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/model.AmountPerDay"
+        "400":
+          description: Bad Request
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+        "404":
+          description: Not Found
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+      summary: Return the conversion rate per day
+      tags:
+        - project
+  /projects/{id}/percentagePerDay:
+    get:
+      consumes:
+        - "*/*"
+      description: Get the cumulated percentage of goal raised per day
+      parameters:
+        - description: id
+          in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/model.AmountPerDay"
+        "400":
+          description: Bad Request
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+        "404":
+          description: Not Found
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+      summary: Return the cumulated percentage of goal raised per day
+      tags:
+        - project
+  /projects/{id}/visitsPerDay:
+    get:
+      consumes:
+        - "*/*"
+      description: Get the total number of visits (views) per day
+      parameters:
+        - description: id
+          in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/model.NumberPerDay"
+        "400":
+          description: Bad Request
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+        "404":
+          description: Not Found
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: "#/definitions/model.HTTPError"
+      summary: Return the number of views per day
+      tags:
+        - project
+swagger: "2.0"
